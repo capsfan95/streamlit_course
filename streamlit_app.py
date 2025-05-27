@@ -32,10 +32,7 @@ if ingredient_list:
         insert_statment = """INSERT INTO smoothies.public.orders(ingredients,orderName) 
         VALUES ('""" + ingredients_string + """','""" +nameOnOrder+ """')"""
     
-     
-        # st.write(insert_statment)
-        # st.stop()
-        insert = st.button("Submit Order")    
-        if insert: 
-            session.sql(insert_statment).collect()
-            st.success('Your Smoothie ordered!', icon='✅')
+insert = st.button("Submit Order")    
+if insert: 
+    session.sql(insert_statment).collect()
+    st.success('Your Smoothie ordered!', icon='✅')

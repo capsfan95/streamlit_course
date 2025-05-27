@@ -1,6 +1,6 @@
-# Import python packages
 import streamlit as st
 from snowflake.snowpark.functions import col
+import requests
 
 # Write directly to the app
 st.title(f":cup_with_straw: Customize Your Smoothie :cup_with_straw:")
@@ -22,22 +22,21 @@ ingredient_list = st.multiselect('Choose up to 5 ingredients:',
 
 if ingredient_list:
     ingredients_string = ""
+    
     for fruit in ingredient_list:
         ingredients_string += fruit + " "
-
-    st.write(ingredients_string)
-
-    insert_statment = """INSERT INTO smoothies.public.orders(ingredients,orderName) 
-    VALUES ('""" + ingredients_string + """','""" +nameOnOrder+ """')"""
-
- 
-    # st.write(insert_statment)
-    # st.stop()
-    insert = st.button("Submit Order")    
-    if insert: 
-        session.sql(insert_statment).collect()
-        st.success('Your Smoothie ordered!', icon='✅')
-
-import requests
-smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
-sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
+        smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
+        sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
+        
+        st.write(ingredients_string)
+    
+        insert_statment = """INSERT INTO smoothies.public.orders(ingredients,orderName) 
+        VALUES ('""" + ingredients_string + """','""" +nameOnOrder+ """')"""
+    
+     
+        # st.write(insert_statment)
+        # st.stop()
+        insert = st.button("Submit Order")    
+        if insert: 
+            session.sql(insert_statment).collect()
+            st.success('Your Smoothie ordered!', icon='✅')

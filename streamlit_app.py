@@ -37,6 +37,8 @@ if ingredient_list:
     
         insert_statment = """INSERT INTO smoothies.public.orders(ingredients,orderName) 
         VALUES ('""" + ingredients_string + """','""" +nameOnOrder+ """')"""
+
+        st.write(insert_statment)
     
 insert = st.button("Submit Order")    
 if insert: 
